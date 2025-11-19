@@ -2,7 +2,8 @@ import { useState, useEffect, lazy, Suspense } from "react";
 import { AnimatePresence, useReducedMotion } from "framer-motion";
 import LoadingScreen from "@/components/shared/LoadingScreen";
 import Chatbot from '@/components/shared/Chatbot';
-import { useSectionRefs } from './hooks/useSectionRefs';
+// 👇 AQUÍ ESTABA EL ERROR: Cambiado 'hooks' por 'Hooks'
+import { useSectionRefs } from './Hooks/useSectionRefs';
 
 // Lazy load secciones
 const HeroSection = lazy(() => import('./sections/HeroSection'));
