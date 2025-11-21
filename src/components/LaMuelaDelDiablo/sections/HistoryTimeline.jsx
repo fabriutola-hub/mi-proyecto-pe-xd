@@ -120,6 +120,7 @@ const HistoryTimeline = forwardRef((props, ref) => {
                 secondaryColor="#1f2937"
                 secondaryStartWord="de"
                 animationDuration={0.6}
+                staggerDelay={0.012}
               />
             </h2>
 
