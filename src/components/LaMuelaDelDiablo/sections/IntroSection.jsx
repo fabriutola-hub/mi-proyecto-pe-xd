@@ -62,7 +62,7 @@ const IntroSection = forwardRef(function IntroSection(
               initial={{ opacity: 0, y: 10 }}
               animate={introInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.05, duration: 0.4 }}
-              className="space-y-6 text-xl text-white/70 font-light leading-relaxed"
+              className="space-y-6 text-2xl text-white/70 font-light leading-relaxed" {/* MODIFICADO a text-2xl */}
             >
               <p>
                 La Muela del Diablo es una formación rocosa de 3,650 metros que
