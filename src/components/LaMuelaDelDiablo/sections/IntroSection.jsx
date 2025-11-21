@@ -164,4 +164,3 @@ const IntroSection = forwardRef(function IntroSection(
 IntroSection.displayName = 'IntroSection';
 
 export default IntroSection;
-
