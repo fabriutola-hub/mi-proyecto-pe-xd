@@ -1,15 +1,8 @@
 import { forwardRef } from 'react';
-import { motion, useScroll, useSpring, useInView } from 'framer-motion';
-import PaintText from '@/components/shared/PaintText';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { historyTimeline } from '../constants/historyTimeline';
 
-// Componente individual para cada item del timeline
 const TimelineItem = ({ item, index }) => {
-  // Usamos un ref interno solo para la animación de entrada de CADA item
-  const ref = { current: null }; 
-  
-  // Nota: Como es un map, usaremos motion.div con whileInView para simplificar
-  // en lugar de crear refs para cada uno manualmente.
   const isEven = index % 2 === 0;
 
   return (
@@ -17,56 +10,47 @@ const TimelineItem = ({ item, index }) => {
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+      transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
       className={`relative flex items-center justify-between mb-24 w-full ${
         isEven ? "md:flex-row-reverse" : "md:flex-row"
       } flex-col`} 
     >
-      {/* Espacio vacío para layout alterno en desktop */}
       <div className="hidden md:block w-5/12" />
 
-      {/* Punto central en la línea */}
+      {/* Central Node */}
       <motion.div
         initial={{ scale: 0 }}
         whileInView={{ scale: 1 }}
         viewport={{ once: true }}
         transition={{ type: "spring", stiffness: 300, delay: 0.2 }}
-        className="absolute left-4 md:left-1/2 w-8 h-8 bg-white border-4 border-orange-500 rounded-full z-20 -translate-x-1/2 shadow-[0_0_15px_rgba(249,115,22,0.5)] flex items-center justify-center"
+        className="absolute left-4 md:left-1/2 w-4 h-4 bg-neo-white border-2 border-neo-black z-20 -translate-x-1/2 flex items-center justify-center rounded-full"
       >
-        <div className="w-2 h-2 bg-orange-600 rounded-full" />
+        <div className="w-1.5 h-1.5 bg-neo-black rounded-full" />
       </motion.div>
 
-      {/* Tarjeta de Contenido */}
+      {/* Content Card */}
       <motion.div
-        whileHover={{ scale: 1.02, rotate: isEven ? 1 : -1 }}
+        whileHover={{ y: -5 }}
         className={`w-full md:w-5/12 pl-12 md:pl-0 ${
           isEven ? "md:pr-12 text-left" : "md:pl-12 text-left"
         }`}
       >
-        <div className="group relative bg-white/50 backdrop-blur-sm border border-gray-100 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden">
+        <div className="group relative bg-neo-white border border-neo-black/10 p-8 shadow-sm hover:shadow-md hover:border-neo-orange transition-all duration-300">
           
-          {/* Decoración de fondo al hacer hover */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-orange-100 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-          {/* Número Grande de fondo */}
-          <span className="absolute -right-4 -bottom-8 text-[8rem] font-limelight text-gray-100/50 select-none pointer-events-none group-hover:text-orange-100/50 transition-colors duration-300">
-            {index + 1}
-          </span>
-
-          {/* Año / Era */}
-          <div className="relative">
-            <span className="inline-block px-3 py-1 mb-4 text-sm font-new-rocker text-orange-600 bg-orange-50 rounded-full border border-orange-100 tracking-wider">
+          {/* Year/Era Badge */}
+          <div className="relative z-10">
+            <span className="inline-block px-0 pb-1 mb-4 text-xs font-bold font-mono text-neo-orange border-b-2 border-neo-orange uppercase tracking-widest">
               {item.year}
             </span>
           </div>
 
-          {/* Título */}
-          <h3 className="relative text-3xl mb-3 text-gray-900 font-limelight leading-tight group-hover:text-orange-700 transition-colors">
+          {/* Title */}
+          <h3 className="relative z-10 text-xl mb-3 text-neo-black font-heading font-black uppercase leading-tight">
             {item.title}
           </h3>
 
-          {/* Descripción */}
-          <p className="relative text-lg font-instrument text-gray-600 leading-relaxed">
+          {/* Desc */}
+          <p className="relative z-10 text-base font-body text-neo-black/60 leading-relaxed">
             {item.desc}
           </p>
         </div>
@@ -75,12 +59,10 @@ const TimelineItem = ({ item, index }) => {
   );
 };
 
-// --- AQUÍ ESTABA EL PROBLEMA: FALTABA EL forwardRef ---
 const HistoryTimeline = forwardRef((props, ref) => {
   
-  // Hook para detectar el scroll dentro de esta sección usando la ref que viene del padre
   const { scrollYProgress } = useScroll({
-    target: ref, // Usamos la referencia externa para medir el scroll
+    target: ref,
     offset: ["start end", "end end"]
   });
 
@@ -91,40 +73,35 @@ const HistoryTimeline = forwardRef((props, ref) => {
   });
 
   return (
-    // Conectamos la ref aquí para que el botón sepa dónde está esta sección
-    <section ref={ref} className="py-32 bg-white overflow-hidden relative">
+    <section ref={ref} className="py-24 md:py-32 bg-neo-sand relative overflow-hidden">
       
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
-      
-      <div className="max-w-[1200px] mx-auto px-6 md:px-12 relative">
+      {/* Background Grid */}
+      <div className="absolute inset-0 z-0 opacity-[0.03]"
+        style={{
+            backgroundImage: `linear-gradient(#2D2420 1px, transparent 1px), linear-gradient(90deg, #2D2420 1px, transparent 1px)`,
+            backgroundSize: '40px 40px'
+        }}
+      />
+
+      <div className="max-w-[1200px] mx-auto px-6 md:px-12 relative z-10">
         
         {/* Header */}
-        <div className="text-center mb-32 relative z-10">
+        <div className="text-center mb-24 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-[0.2em] uppercase text-orange-600 bg-orange-50 border border-orange-100 rounded-full">
-              Cronología Histórica
+            <span className="font-mono text-xs font-bold tracking-[0.2em] text-neo-black/60 uppercase mb-4 block">
+                Cronología
             </span>
             
-            <h2 className="text-[clamp(2.5rem,6vw,5rem)] leading-[0.9] tracking-tighter mb-8">
-              <PaintText
-                text="Milenios de Historia Viva"
-                className="text-[clamp(2.5rem,6vw,5rem)] leading-[0.9] tracking-tighter font-new-rocker"
-                paintedColor="#d97706" 
-                unpaintedColor="#1f2937"
-                bicolor={true}
-                secondaryColor="#1f2937"
-                secondaryStartWord="de"
-                animationDuration={0.6}
-                staggerDelay={0.012}
-              />
+            <h2 className="text-[clamp(3rem,5vw,5rem)] leading-none tracking-tight mb-8 font-heading font-black text-neo-black uppercase">
+               LEGADO <br/><span className="text-neo-orange">HISTÓRICO</span>
             </h2>
 
-            <p className="max-w-2xl mx-auto text-xl font-instrument text-gray-500 leading-relaxed">
+            <p className="max-w-2xl mx-auto text-lg font-body text-neo-black/70 leading-relaxed">
               Un viaje a través del tiempo en Auki Kollo, donde cada estrato geológico
               y cada piedra cuenta la historia de la formación de los Andes.
             </p>
@@ -134,11 +111,11 @@ const HistoryTimeline = forwardRef((props, ref) => {
         {/* Timeline Container */}
         <div className="relative">
           
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gray-100 -translate-x-1/2" />
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-neo-black/10 -translate-x-1/2" />
 
           <motion.div 
             style={{ scaleY }}
-            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-orange-400 via-red-500 to-orange-600 origin-top -translate-x-1/2 z-10 shadow-[0_0_10px_rgba(249,115,22,0.4)]"
+            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-neo-orange origin-top -translate-x-1/2 z-10"
           />
 
           <div className="relative z-10 pt-10">
@@ -147,7 +124,7 @@ const HistoryTimeline = forwardRef((props, ref) => {
             ))}
           </div>
           
-          <div className="absolute bottom-0 left-4 md:left-1/2 w-3 h-3 bg-orange-600 rounded-full -translate-x-1/2 translate-y-1/2 z-20" />
+          <div className="absolute bottom-0 left-4 md:left-1/2 w-3 h-3 bg-neo-black rounded-full -translate-x-1/2 translate-y-1/2 z-20" />
         </div>
 
       </div>
