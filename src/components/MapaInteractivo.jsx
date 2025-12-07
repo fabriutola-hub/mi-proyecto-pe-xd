@@ -20,7 +20,7 @@ const geoJsonLayerStyle = {
 const STYLE_2D = 'mapbox://styles/mapbox/streets-v12';
 const STYLE_3D = 'mapbox://styles/mapbox/satellite-streets-v12';
 
-export default function MapaInteractivo() {
+export default function MapaInteractivo({ preview = false }) {
   const mapRef = useRef(null);
   
   const [viewState, setViewState] = useState({
@@ -126,14 +126,18 @@ export default function MapaInteractivo() {
       <Map
         ref={mapRef}
         {...viewState}
-        onMove={handleMove}
+        onMove={!preview ? handleMove : undefined}
+        scrollZoom={!preview}
+        dragPan={!preview}
+        doubleClickZoom={!preview}
+        touchZoom={!preview}
         mapboxAccessToken={MAPBOX_TOKEN}
         mapStyle={mapStyle}
         style={{ width: '100%', height: '100%' }}
         maxPitch={85}
         terrain={terrainConfig}
-        interactiveLayerIds={['puntos-muela']}
-        onClick={handleMapClick}
+        interactiveLayerIds={!preview ? ['puntos-muela'] : []}
+        onClick={!preview ? handleMapClick : undefined}
         // Optimización: Renderizado asíncrono para mejor performance
         renderWorldCopies={false}
         // Optimización: Configurar la calidad de renderizado
@@ -141,8 +145,8 @@ export default function MapaInteractivo() {
         // Optimización: Reducir carga inicial
         reuseMaps
       >
-        <NavigationControl position="top-right" />
-        <FullscreenControl position="top-right" />
+        {!preview && <NavigationControl position="top-right" />}
+        {!preview && <FullscreenControl position="top-right" />}
 
         {/* Fuente de relieve - solo cargar en modo 3D */}
         {is3D && (
@@ -184,13 +188,15 @@ export default function MapaInteractivo() {
       </Map>
 
       {/* Botón 2D/3D optimizado */}
-      <button
-        onClick={toggleMapStyle}
-        className="absolute top-5 left-5 z-10 px-4 py-2 bg-white text-[#1a3a5f] border-none rounded-full cursor-pointer font-semibold font-sans shadow-md hover:shadow-lg transition-shadow duration-200"
-        style={{ willChange: 'box-shadow' }}
-      >
-        {is3D ? '🗺️ Ver en 2D' : '🌍 Ver en 3D'}
-      </button>
+      {!preview && (
+        <button
+          onClick={toggleMapStyle}
+          className="absolute top-5 left-5 z-10 px-4 py-2 bg-white text-[#1a3a5f] border-none rounded-full cursor-pointer font-semibold font-sans shadow-md hover:shadow-lg transition-shadow duration-200"
+          style={{ willChange: 'box-shadow' }}
+        >
+          {is3D ? '🗺️ Ver en 2D' : '🌍 Ver en 3D'}
+        </button>
+      )}
     </div>
   );
 }

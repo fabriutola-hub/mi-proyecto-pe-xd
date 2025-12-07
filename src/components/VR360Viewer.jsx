@@ -4,7 +4,7 @@ import React from 'react';
 import 'aframe'; 
 import { Scene } from 'aframe-react';
 
-function VR360Viewer({ src, caption }) {
+function VR360Viewer({ src, caption, embedded = true }) {
   if (!src) {
     return null; 
   }
@@ -12,8 +12,7 @@ function VR360Viewer({ src, caption }) {
   const textProps = `value: ${caption || ''}; align: center; color: #FFFFFF; width: 3;`;
 
   return (
-    // 1. ¡CAMBIO! Quita el atributo 'embedded' de aquí
-    <Scene>
+    <Scene embedded={embedded}>
       
       <a-sky src={src}></a-sky>
 
