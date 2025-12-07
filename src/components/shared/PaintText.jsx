@@ -6,9 +6,9 @@ export default function PaintText({
   className,
   paintedColor = "rgb(55, 65, 81)",
   unpaintedColor = "rgba(55, 65, 81, 0.2)",
-  animationDuration = 0.8, // Un poco más lento para apreciar la elegancia
+  animationDuration = 0.8,
   staggerDelay = 0.04,
-  ease = [0.33, 1, 0.68, 1], // Curva "Cubic Bezier" suave y moderna
+  ease = [0.33, 1, 0.68, 1],
   bicolor = false,
   secondaryColor = "#e63946",
   secondaryStartWord = null
@@ -16,7 +16,6 @@ export default function PaintText({
   const shouldReduceMotion = useReducedMotion();
   const words = useMemo(() => text.split(" "), [text]);
 
-  // Variantes del contenedor (Orquestador)
   const containerVariants = useMemo(() => ({
     hidden: {},
     visible: {
@@ -27,21 +26,19 @@ export default function PaintText({
     },
   }), [shouldReduceMotion, staggerDelay]);
 
-  // Variantes de la PALABRA (La animación principal)
   const wordVariants = useMemo(() => ({
     hidden: {
-      y: "120%", // Empieza totalmente fuera de la vista (abajo)
-      rotateX: 40, // Inclinado hacia atrás
+      y: "120%",
+      rotateX: 40,
       opacity: 0,
-      backgroundSize: "0% 100%", // Pintura vacía
+      backgroundSize: "0% 100%",
     },
     visible: {
       y: "0%",
       rotateX: 0,
       opacity: 1,
-      backgroundSize: "100% 100%", // Pintura llena
+      backgroundSize: "100% 100%",
       transition: {
-        // Animación de posición y rotación (El "Pop")
         y: {
           duration: shouldReduceMotion ? 0 : animationDuration,
           ease: ease,
@@ -50,8 +47,7 @@ export default function PaintText({
           duration: shouldReduceMotion ? 0 : animationDuration,
           ease: ease,
         },
-        opacity: { duration: 0.4 }, // Aparece rápido
-        // Animación de la pintura (El "Fill") - Ligeramente retrasada para efecto visual
+        opacity: { duration: 0.4 },
         backgroundSize: {
           duration: animationDuration * 0.8,
           delay: 0.1,
@@ -61,7 +57,6 @@ export default function PaintText({
     },
   }), [shouldReduceMotion, animationDuration, ease]);
 
-  // Lógica de color (Mantenemos tu lógica intacta)
   const getWordColor = (index) => {
     if (!bicolor) return paintedColor;
     
@@ -77,19 +72,18 @@ export default function PaintText({
   };
 
   return (
-    <motion.h2 // Cambiado a h2 o div según semántica, permite mejor SEO
-      className={`${className} leading-tight tracking-tight`} // Tracking tight se ve más moderno
+    <motion.span
+      className={`${className} leading-tight tracking-tight`}
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3, margin: "0px 0px -10% 0px" }}
-      style={{ perspective: "1000px" }} // Necesario para el efecto 3D
+      style={{ perspective: "1000px", display: "inline-block" }}
     >
       {words.map((word, index) => {
         const wordColor = getWordColor(index);
         
         return (
-          // WRAPPER: Crea la máscara de recorte (El secreto del look "Agency")
           <span 
             key={`${word}-${index}`} 
             style={{ 
@@ -97,7 +91,7 @@ export default function PaintText({
               overflow: "hidden", 
               verticalAlign: "bottom",
               marginRight: "0.25em",
-              paddingBottom: "0.1em" // Evita cortar letras como g, j, p
+              paddingBottom: "0.1em"
             }}
           >
             <motion.span
@@ -110,15 +104,14 @@ export default function PaintText({
               style={{
                 display: "inline-block",
                 color: unpaintedColor,
-                // El degradado ahora soporta un ligero brillo en el borde
                 backgroundImage: `linear-gradient(to right, ${wordColor}, ${wordColor})`,
                 backgroundPosition: "0 0",
                 backgroundRepeat: "no-repeat",
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
-                willChange: "transform, background-size", // Optimización GPU
-                transformOrigin: "bottom center", // Rotación desde la base
+                willChange: "transform, background-size",
+                transformOrigin: "bottom center",
               }}
             >
               {word}
@@ -126,6 +119,6 @@ export default function PaintText({
           </span>
         );
       })}
-    </motion.h2>
+    </motion.span>
   );
 }

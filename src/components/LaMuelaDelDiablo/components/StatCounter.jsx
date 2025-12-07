@@ -10,7 +10,7 @@ const StatCounter = memo(({ target, label, suffix, inView, delay }) => {
     if (inView && !hasAnimated.current) {
       hasAnimated.current = true;
       const startTime = Date.now();
-      const duration = 1000;
+      const duration = 1500;
 
       const animate = () => {
         const elapsed = Date.now() - startTime;
@@ -38,31 +38,18 @@ const StatCounter = memo(({ target, label, suffix, inView, delay }) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay, duration: 0.4, ease: "easeOut" }}
-      whileHover={{ scale: 1.03, y: -4 }}
-      className="text-center min-h-[180px] flex flex-col justify-center items-center px-4"
+      transition={{ delay, duration: 0.6, ease: "easeOut" }}
+      className="group flex flex-col items-start"
     >
-      {/* 🔥 CAMBIO 1: Números con LIMELIGHT 
-         Reemplacé 'font-black' por 'font-limelight'.
-      */}
       <div 
-        className="font-limelight text-[clamp(3.5rem,8vw,8rem)] leading-none tracking-tighter mb-4"
-        style={{
-          background: 'linear-gradient(to bottom right, #dc2626, #ea580c)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text',
-          color: '#dc2626',
-          display: 'inline-block'
-        }}
+        className="font-heading font-black text-[clamp(3.5rem,4vw,5rem)] leading-none tracking-tight text-neo-black mb-2 group-hover:text-neo-orange transition-colors duration-500"
       >
         {count.toLocaleString()}{suffix}
       </div>
 
-      {/* 🔥 CAMBIO 2: Label con ITALIANA
-         Como es un párrafo, le aplicamos la fuente Italiana para que combine.
-      */}
-      <p className="font-italiana text-lg md:text-xl font-medium text-gray-600 uppercase tracking-wide px-2">
+      <div className="h-px w-full bg-neo-black/20 my-4 group-hover:bg-neo-orange/50 transition-colors duration-500 origin-left group-hover:scale-x-100" />
+
+      <p className="font-mono text-sm font-bold text-neo-black/60 uppercase tracking-widest group-hover:text-neo-black transition-colors">
         {label}
       </p>
     </motion.div>

@@ -52,9 +52,9 @@ export default function LaMuelaDelDiablo() {
       </AnimatePresence>
 
       <div className="w-full max-w-[100vw] overflow-x-hidden">
-        <div className="bg-black text-white">
+        <div className="bg-neo-white text-neo-black selection:bg-neo-orange selection:text-white">
           
-          <Suspense fallback={<div className="min-h-screen bg-black" />}>
+          <Suspense fallback={<div className="min-h-screen bg-neo-white" />}>
             <HeroSection 
               isLoaded={isLoaded}
               menuOpen={menuOpen}
