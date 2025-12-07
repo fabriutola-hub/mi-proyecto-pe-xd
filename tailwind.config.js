@@ -6,22 +6,26 @@ export default {
   ],
   theme: {
     extend: {
-      // Tus fuentes personalizadas (NO LAS BORRÉ)
+      colors: {
+        'diablo-dark': '#0a0a0f', // Deep Black/Blue
+        'diablo-earth': '#8c3a3a', // Terracotta/Reddish
+        'diablo-sage': '#6b705c', // Sage/Nature
+        'diablo-volcano': '#d95d39', // Volcanic Orange
+        'diablo-accent': '#f0a500', // Yellowish accent
+        'diablo-glass': 'rgba(255, 255, 255, 0.1)', // Glass effect
+      },
       fontFamily: {
-        'limelight': ['Limelight', 'cursive'],
-        'new-rocker': ['"New Rocker"', 'cursive'],
-        'instrument': ['"Instrument Serif"', 'serif'],
-        // Agregué esta para asegurar el look "máquina de escribir" del Chatbot
+        'display': ['"Instrument Serif"', 'serif'], // Display font
+        'body': ['"Manrope"', 'sans-serif'], // Body font
+        'limelight': ['Limelight', 'cursive'], // Kept for legacy or specific use
+        'new-rocker': ['"New Rocker"', 'cursive'], // Kept for legacy
         'mono': ['"Courier New"', 'Courier', 'monospace'], 
       },
-      // 👇 AGREGAR ESTO: Definición de las animaciones del Chatbot y Loading
       keyframes: {
-        // Animación para las líneas de escaneo (bajan infinitamente)
         scan: {
           '0%': { backgroundPosition: '0% 0%' },
           '100%': { backgroundPosition: '0% 100%' },
         },
-        // Animación para el parpadeo de monitor viejo (CRT)
         flicker: {
           '0%': { opacity: '0.97' },
           '5%': { opacity: '0.9' },
@@ -29,16 +33,14 @@ export default {
           '15%': { opacity: '0.95' },
           '100%': { opacity: '0.97' },
         },
-        // Animación para el brillo lento (usado en loading)
         'pulse-slow': {
           '0%, 100%': { opacity: '0.4' },
           '50%': { opacity: '0.7' },
         }
       },
-      // 👇 AGREGAR ESTO: Nombres de clases para usar en el HTML
       animation: {
-        scan: 'scan 8s linear infinite',      // class="animate-scan"
-        flicker: 'flicker 2s infinite',       // class="animate-flicker"
+        scan: 'scan 8s linear infinite',
+        flicker: 'flicker 2s infinite',
         'pulse-slow': 'pulse-slow 4s ease-in-out infinite',
       }
     },

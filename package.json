@@ -15,6 +15,7 @@
     "@capacitor/core": "^7.4.4",
     "@capacitor/ios": "^7.4.4",
     "@capacitor/motion": "^7.0.1",
+    "@fontsource/manrope": "^5.2.8",
     "@headlessui/react": "^2.2.9",
     "@photo-sphere-viewer/core": "^5.13.1",
     "@photo-sphere-viewer/gyroscope-plugin": "^5.13.1",
