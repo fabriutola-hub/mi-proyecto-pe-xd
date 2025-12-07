@@ -62,10 +62,10 @@ const MapaInteractivoLazy = lazy(() =>
  * Main lazy map wrapper component
  * Handles lazy loading with proper fallback states
  */
-const LazyMapaInteractivo = memo(() => {
+const LazyMapaInteractivo = memo((props) => {
   return (
     <Suspense fallback={<MapLoadingFallback />}>
-      <MapaInteractivoLazy />
+      <MapaInteractivoLazy {...props} />
     </Suspense>
   );
 });

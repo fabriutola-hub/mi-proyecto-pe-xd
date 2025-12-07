@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import { Section } from '../../ui/Section';
 import { MapPin, ArrowRight, Bus, Car, Footprints } from 'lucide-react';
+import LazyMapaInteractivo from '@/components/LazyMapaInteractivo';
 
 const RouteSection = forwardRef(({ onOpenMap }, ref) => {
   const steps = [
@@ -84,33 +85,15 @@ const RouteSection = forwardRef(({ onOpenMap }, ref) => {
         >
            {/* Stylized map visualization */}
             <div className="absolute inset-0 bg-gray-900">
-                <img
-                    src="/imagenes/IniciodelSendero.avif"
-                    alt="Mapa de Ruta"
-                    className="w-full h-full object-cover opacity-60"
-                />
+                <LazyMapaInteractivo preview={true} />
+
                  {/* Decorative overlay suggesting map UI */}
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-4 py-2 rounded-lg shadow-sm">
+                <div className="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur px-4 py-2 rounded-lg shadow-sm">
                     <span className="text-xs font-bold text-diablo-dark">LA PAZ, BO</span>
-                </div>
-
-                {/* Simulated Path Line */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                    <path d="M 100 400 Q 200 350 250 250 T 400 100" fill="none" stroke="#d95d39" strokeWidth="4" strokeDasharray="8 4" />
-                    <circle cx="100" cy="400" r="6" fill="#0a0a0f" />
-                    <circle cx="400" cy="100" r="8" fill="#d95d39" stroke="white" strokeWidth="2" />
-                </svg>
-
-                {/* Marker */}
-                <div className="absolute top-[85px] left-[388px] transform -translate-x-1/2 -translate-y-full">
-                     <div className="bg-diablo-dark text-white text-xs px-2 py-1 rounded shadow-lg whitespace-nowrap">
-                        Muela del Diablo
-                     </div>
-                     <div className="w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px] border-t-diablo-dark mx-auto"></div>
                 </div>
             </div>
 
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-8">
+            <div className="absolute bottom-0 left-0 right-0 z-10 bg-gradient-to-t from-black/80 to-transparent p-8">
                <p className="text-white text-sm font-medium">Vista simplificada. Abre el mapa interactivo para GPS y detalles 3D.</p>
             </div>
         </motion.div>
