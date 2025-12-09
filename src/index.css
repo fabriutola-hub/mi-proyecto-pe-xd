@@ -1,44 +1,70 @@
+@import "tw-animate-css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Tus importaciones extras */
-@import "tw-animate-css";
-
-/* 🔥 AQUÍ ESTÁ LA MAGIA 
-   Usamos @layer base para aplicar estilos globales a etiquetas HTML
-*/
 @layer base {
-  h1 {
-    @apply font-limelight;
+  body {
+    @apply bg-basalt text-glacier font-sans cursor-none;
   }
 
-  h2, h3, h4 {
-    @apply font-new-rocker;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold uppercase;
   }
 
-  p {
-    @apply font-instrument; 
+  p, span, li, a {
+    @apply font-body;
   }
 }
-
-/* ✅ TUS ESTILOS GLOBALES PREVIOS */
 
 * {
   box-sizing: border-box;
 }
 
-/* Simplifiqué esto aplicándolo a ambos selectores juntos */
 html, body, #root {
   overflow-x: hidden;
   max-width: 100vw;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  /* Opcional: Esto asegura que si escribes texto fuera de un p, use una fuente por defecto */
-  font-family: sans-serif; 
+/* Custom Cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  background-color: #CCFF00; /* Neon Lichen */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.custom-cursor.hovered {
+  width: 48px;
+  height: 48px;
+  opacity: 0.5;
+}
+
+/* Scrollbar Customization for Webkit */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0F0F11; /* Basalt */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1A1A1C; /* Slate */
+  border: 1px solid #CCFF00; /* Neon Lichen */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #CCFF00;
 }
 
 img, video, iframe {

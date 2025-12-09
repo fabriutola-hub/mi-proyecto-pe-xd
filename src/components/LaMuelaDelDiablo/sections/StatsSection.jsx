@@ -1,35 +1,36 @@
 import { forwardRef } from 'react';
 import { useInView } from 'framer-motion';
 import StatCounter from '../components/StatCounter';
+import { BentoGrid } from '@/components/ui/BentoGrid';
 
 const StatsSection = forwardRef((props, ref) => {
-  const inViewConfig = { once: true, margin: "-50px", amount: 0.1 };
+  const inViewConfig = { once: true, margin: "-100px" };
   const statsInView = useInView(ref, inViewConfig);
 
   return (
-    <section ref={ref} className="py-32 bg-white text-black overflow-visible">
-      <div className="max-w-[1800px] mx-auto px-8 md:px-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
+    <section ref={ref} className="bg-basalt border-t border-slate py-20 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <StatCounter 
             target={3650} 
-            label="Metros de Altura" 
+            label="Meters Elevation"
             suffix="m" 
             inView={statsInView} 
             delay={0} 
           />
           <StatCounter 
-            target={10000} 
-            label="Visitantes Anuales" 
-            suffix="+" 
+            target={2025}
+            label="Vision Year"
+            suffix=""
             inView={statsInView} 
-            delay={0.05} 
+            delay={0.1}
           />
           <StatCounter 
-            target={1950} 
-            label="Primera Ascensión" 
-            suffix="" 
+            target={100}
+            label="Adventure Grade"
+            suffix="%"
             inView={statsInView} 
-            delay={0.1} 
+            delay={0.2}
           />
         </div>
       </div>

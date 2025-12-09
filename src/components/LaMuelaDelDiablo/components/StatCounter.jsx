@@ -10,7 +10,7 @@ const StatCounter = memo(({ target, label, suffix, inView, delay }) => {
     if (inView && !hasAnimated.current) {
       hasAnimated.current = true;
       const startTime = Date.now();
-      const duration = 1000;
+      const duration = 1500; // Slower, more impactful
 
       const animate = () => {
         const elapsed = Date.now() - startTime;
@@ -36,33 +36,25 @@ const StatCounter = memo(({ target, label, suffix, inView, delay }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay, duration: 0.4, ease: "easeOut" }}
-      whileHover={{ scale: 1.03, y: -4 }}
-      className="text-center min-h-[180px] flex flex-col justify-center items-center px-4"
+      transition={{ delay, duration: 0.6, ease: "easeOut" }}
+      className="relative group min-h-[200px] flex flex-col justify-center items-center px-4 py-8 border border-slate bg-basalt hover:border-neon-lichen transition-colors duration-300"
     >
-      {/* 🔥 CAMBIO 1: Números con LIMELIGHT 
-         Reemplacé 'font-black' por 'font-limelight'.
-      */}
+      <div className="absolute top-0 left-0 p-2 opacity-50">
+        <div className="w-2 h-2 border-t border-l border-neon-lichen"></div>
+      </div>
+      <div className="absolute bottom-0 right-0 p-2 opacity-50">
+         <div className="w-2 h-2 border-b border-r border-neon-lichen"></div>
+      </div>
+
       <div 
-        className="font-limelight text-[clamp(3.5rem,8vw,8rem)] leading-none tracking-tighter mb-4"
-        style={{
-          background: 'linear-gradient(to bottom right, #dc2626, #ea580c)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text',
-          color: '#dc2626',
-          display: 'inline-block'
-        }}
+        className="font-display font-black text-[clamp(4rem,6vw,6rem)] leading-none tracking-tighter mb-2 text-white group-hover:text-neon-lichen transition-colors duration-300"
       >
         {count.toLocaleString()}{suffix}
       </div>
 
-      {/* 🔥 CAMBIO 2: Label con ITALIANA
-         Como es un párrafo, le aplicamos la fuente Italiana para que combine.
-      */}
-      <p className="font-italiana text-lg md:text-xl font-medium text-gray-600 uppercase tracking-wide px-2">
+      <p className="font-mono text-xs md:text-sm text-granite uppercase tracking-[0.2em] px-2 bg-slate/50 py-1 rounded-sm">
         {label}
       </p>
     </motion.div>

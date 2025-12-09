@@ -2,117 +2,108 @@ import { forwardRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
 const FooterSection = forwardRef((props, ref) => {
-  const inViewConfig = { once: true, margin: "-50px", amount: 0.1 };
+  const inViewConfig = { once: true, margin: "-50px" };
   const contactInView = useInView(ref, inViewConfig);
 
   const footerLinks = {
-    experiences: ["Trekking", "Cultura", "Fotografía"],
-    info: ["FAQ", "Blog", "Seguridad", "Contacto"],
+    expeditions: ["Route Map", "Gear Guide", "Safety Protocols"],
+    project: ["About Vision 2025", "Geology Research", "Contact Team"],
     social: [
-      { icon: "📘", label: "Facebook", url: "#" },
-      { icon: "📷", label: "Instagram", url: "#" },
-      { icon: "🐦", label: "Twitter", url: "#" }
+      { label: "IG", url: "#" },
+      { label: "TW", url: "#" },
+      { label: "YT", url: "#" }
     ]
   };
 
   return (
-    <footer ref={ref} className="py-20 bg-black border-t border-white/10">
-      <div className="max-w-[1800px] mx-auto px-8 md:px-16">
-        <div className="grid md:grid-cols-4 gap-16 mb-16">
+    <footer ref={ref} className="py-20 bg-basalt border-t border-slate text-granite font-mono text-sm">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="grid md:grid-cols-4 gap-12 mb-16">
           
           {/* Branding */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={contactInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.4 }}
+            className="col-span-1"
           >
-            <div className="text-3xl font-black mb-4">LA MUELA</div>
-            <p className="text-white/60 leading-relaxed">
-              Descubre el ícono geológico de Bolivia.
+            <div className="font-display font-black text-2xl text-white uppercase tracking-tighter mb-4">
+              La Muela<br/>
+              <span className="text-neon-lichen">Del Diablo</span>
+            </div>
+            <p className="leading-relaxed text-xs max-w-[200px]">
+              The geological icon of Bolivia. <br/>
+              3650 MASL.
             </p>
           </motion.div>
           
-          {/* Experiencias */}
+          {/* Columns */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={contactInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.05, duration: 0.4 }}
           >
-            <h3 className="text-sm font-bold uppercase tracking-wider mb-6">
-              Experiencias
+            <h3 className="font-bold text-white uppercase tracking-wider mb-6 text-xs">
+              Expeditions
             </h3>
             <ul className="space-y-3">
-              {footerLinks.experiences.map(item => (
-                <motion.li key={item} whileHover={{ x: 5 }}>
-                  <a 
-                    href="#" 
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
+              {footerLinks.expeditions.map(item => (
+                <li key={item}>
+                  <a href="#" className="hover:text-neon-lichen transition-colors block w-fit">
                     {item}
                   </a>
-                </motion.li>
+                </li>
               ))}
             </ul>
           </motion.div>
           
-          {/* Información */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={contactInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.1, duration: 0.4 }}
           >
-            <h3 className="text-sm font-bold uppercase tracking-wider mb-6">
-              Información
+            <h3 className="font-bold text-white uppercase tracking-wider mb-6 text-xs">
+              Project
             </h3>
             <ul className="space-y-3">
-              {footerLinks.info.map(item => (
-                <motion.li key={item} whileHover={{ x: 5 }}>
-                  <a 
-                    href="#" 
-                    className="text-white/60 hover:text-white transition-colors"
-                  >
+              {footerLinks.project.map(item => (
+                <li key={item}>
+                  <a href="#" className="hover:text-neon-lichen transition-colors block w-fit">
                     {item}
                   </a>
-                </motion.li>
+                </li>
               ))}
             </ul>
           </motion.div>
           
-          {/* Redes Sociales */}
+          {/* Social Text Links (Minimalist) */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={contactInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.15, duration: 0.4 }}
           >
-            <h3 className="text-sm font-bold uppercase tracking-wider mb-6">
-              Síguenos
+            <h3 className="font-bold text-white uppercase tracking-wider mb-6 text-xs">
+              Connect
             </h3>
             <div className="flex gap-4">
               {footerLinks.social.map((social, i) => (
-                <motion.a 
+                <a
                   key={i} 
                   href={social.url}
-                  aria-label={social.label}
-                  whileHover={{ scale: 1.12, rotate: 6 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center text-xl hover:bg-white/10 transition-colors"
+                  className="w-10 h-10 border border-slate flex items-center justify-center hover:bg-neon-lichen hover:text-basalt hover:border-neon-lichen transition-all rounded-none font-bold text-xs"
                 >
-                  {social.icon}
-                </motion.a>
+                  {social.label}
+                </a>
               ))}
             </div>
           </motion.div>
         </div>
         
         {/* Copyright */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={contactInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.2, duration: 0.4 }}
-          className="pt-8 border-t border-white/10 text-center text-white/40 text-sm"
-        >
-          © 2025 La Muela del Diablo. Diseñado con ❤️ en Bolivia.
-        </motion.div>
+        <div className="pt-8 border-t border-slate flex flex-col md:flex-row justify-between items-center gap-4 text-xs uppercase tracking-widest">
+            <span>© 2025 La Muela Project.</span>
+            <span>La Paz, Bolivia</span>
+        </div>
       </div>
     </footer>
   );
