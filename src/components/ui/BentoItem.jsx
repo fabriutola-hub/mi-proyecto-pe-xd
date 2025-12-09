@@ -13,6 +13,7 @@ export function BentoItem({
   description,
   header,
   icon,
+  children,
   span = "", // e.g., "md:col-span-2"
 }) {
   return (
@@ -28,12 +29,17 @@ export function BentoItem({
       {header}
       <div className="group-hover/bento:translate-x-2 transition duration-200 p-4">
         {icon}
-        <div className="font-display font-bold text-neon-lichen mb-2 mt-2">
-          {title}
-        </div>
-        <div className="font-body font-normal text-granite text-xs">
-          {description}
-        </div>
+        {title && (
+          <div className="font-display font-bold text-neon-lichen mb-2 mt-2">
+            {title}
+          </div>
+        )}
+        {description && (
+          <div className="font-body font-normal text-granite text-xs">
+            {description}
+          </div>
+        )}
+        {children}
       </div>
     </motion.div>
   );

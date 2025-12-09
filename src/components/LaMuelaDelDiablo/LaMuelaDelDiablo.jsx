@@ -9,7 +9,7 @@ const HeroSection = lazy(() => import('./sections/HeroSection'));
 const StatsSection = lazy(() => import('./sections/StatsSection'));
 // Replacing ExperiencesSection with DiscoverBentoSection as the main "Discover" hub
 const DiscoverBentoSection = lazy(() => import('./sections/DiscoverBentoSection'));
-const HistoryTimeline = lazy(() => import('./sections/HistoryTimeline'));
+const HistoryScrollytelling = lazy(() => import('./sections/HistoryScrollytelling'));
 // Keeping Gallery/Visor/Testimonials but ensuring they don't break the layout.
 // Ideally, these would be refactored too, but fitting them into the theme via CSS.
 const GallerySection = lazy(() => import('./sections/GallerySection'));
@@ -95,7 +95,9 @@ export default function LaMuelaDelDiablo() {
             
             {/* Removed IntroSection as it was redundant with Hero/History */}
             
-            <HistoryTimeline ref={refs.historyRef} />
+            <div ref={refs.historyRef}>
+              <HistoryScrollytelling />
+            </div>
             
             {/* Keeping these for content completeness but they might need CSS tweaks via global styles */}
             <GallerySection ref={refs.galleryRef} />
