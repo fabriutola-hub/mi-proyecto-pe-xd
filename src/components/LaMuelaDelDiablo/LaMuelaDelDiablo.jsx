@@ -2,6 +2,7 @@ import { useState, useEffect, lazy, Suspense } from "react";
 import { AnimatePresence, useReducedMotion } from "framer-motion";
 import LoadingScreen from "@/components/shared/LoadingScreen";
 import Chatbot from '@/components/shared/Chatbot';
+import NeoNavBar from "./components/NeoNavBar";
 // 👇 AQUÍ ESTABA EL ERROR: Cambiado 'hooks' por 'Hooks'
 import { useSectionRefs } from './Hooks/useSectionRefs';
 
@@ -54,11 +55,11 @@ export default function LaMuelaDelDiablo() {
       <div className="w-full max-w-[100vw] overflow-x-hidden">
         <div className="bg-black text-white">
           
+          <NeoNavBar scrollToSection={scrollToSection} refs={refs} />
+
           <Suspense fallback={<div className="min-h-screen bg-black" />}>
             <HeroSection 
               isLoaded={isLoaded}
-              menuOpen={menuOpen}
-              setMenuOpen={setMenuOpen}
               scrollToSection={scrollToSection}
               refs={refs}
             />
