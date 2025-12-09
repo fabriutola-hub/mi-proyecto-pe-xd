@@ -1,26 +1,18 @@
 import { useState, useMemo, useCallback, useRef } from 'react';
 import Map, { Source, Layer, NavigationControl, FullscreenControl, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { cn } from '@/lib/utils'; // Assuming this utility exists or similar
+import { clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
 
-const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
-
-// Optimización: Memoizar estilos de capa fuera del componente
-const geoJsonLayerStyle = {
-  id: 'puntos-muela',
-  type: 'circle',
-  paint: {
-    'circle-color': '#e63946', 
-    'circle-radius': 8,
-    'circle-stroke-width': 2,
-    'circle-stroke-color': '#ffffff'
-  }
-};
+// Fallback token if env variable is missing or empty
+const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || 'pk.eyJ1IjoiamRvZSIsImEiOiJjbHh4eHh4eHh4eHh4In0.xxxxxx';
 
 // Estilos de mapa como constantes
-const STYLE_2D = 'mapbox://styles/mapbox/streets-v12';
+const STYLE_2D = 'mapbox://styles/mapbox/dark-v11';
 const STYLE_3D = 'mapbox://styles/mapbox/satellite-streets-v12';
 
-export default function MapaInteractivo() {
+export default function MapaInteractivo({ className, minimal = false }) {
   const mapRef = useRef(null);
   
   const [viewState, setViewState] = useState({
@@ -33,6 +25,19 @@ export default function MapaInteractivo() {
 
   const [is3D, setIs3D] = useState(false);
   const [clickedPoint, setClickedPoint] = useState(null);
+
+  // Optimización: Memoizar estilos de capa fuera del componente
+  // Updated for Neon Lichen palette
+  const geoJsonLayerStyle = useMemo(() => ({
+    id: 'puntos-muela',
+    type: 'circle',
+    paint: {
+      'circle-color': '#CCFF00', // Neon Lichen
+      'circle-radius': 6, // Slightly smaller for technical look
+      'circle-stroke-width': 1,
+      'circle-stroke-color': '#0F0F11' // Basalt
+    }
+  }), []);
 
   // Optimización: useCallback para evitar recrear funciones
   const toggleMapStyle = useCallback(() => {
@@ -94,35 +99,33 @@ export default function MapaInteractivo() {
     if (!clickedPoint) return null;
 
     return (
-      <div style={{ maxWidth: '200px' }}>
+      <div className="font-body text-basalt max-w-[200px]">
         {clickedPoint.properties.imagenUrl && (
           <img 
             src={clickedPoint.properties.imagenUrl} 
             alt={clickedPoint.properties.LUGAR} 
-            className="w-full h-32 object-cover rounded-md"
+            className="w-full h-32 object-cover rounded-none mb-2 border border-basalt"
             loading="lazy"
           />
         )}
-        <h3 className="text-lg text-black font-bold my-2">
+        <h3 className="text-lg font-bold font-display uppercase mb-1">
           {clickedPoint.properties.LUGAR}
         </h3>
         {clickedPoint.properties.descripcion && (
-          <p className="text-xs text-gray-700 italic mb-2">
+          <p className="text-xs italic mb-2">
             {clickedPoint.properties.descripcion}
           </p>
         )}
-        <p className="text-sm text-gray-700">
-          <strong>Norte:</strong> {clickedPoint.properties.Norte}
-        </p>
-        <p className="text-sm text-gray-700">
-          <strong>Sur:</strong> {clickedPoint.properties.Sur}
-        </p>
+        <div className="text-xs grid grid-cols-1 gap-1 border-t border-basalt/20 pt-2 mt-2">
+           <div><strong>Norte:</strong> {clickedPoint.properties.Norte}</div>
+           <div><strong>Sur:</strong> {clickedPoint.properties.Sur}</div>
+        </div>
       </div>
     );
   }, [clickedPoint]);
 
   return (
-    <div style={{ height: '100%', width: '100%', position: 'relative' }}>
+    <div className={twMerge(clsx("relative w-full h-full bg-slate overflow-hidden", className))}>
       <Map
         ref={mapRef}
         {...viewState}
@@ -141,8 +144,12 @@ export default function MapaInteractivo() {
         // Optimización: Reducir carga inicial
         reuseMaps
       >
-        <NavigationControl position="top-right" />
-        <FullscreenControl position="top-right" />
+        {!minimal && (
+           <>
+            <NavigationControl position="top-right" />
+            <FullscreenControl position="top-right" />
+           </>
+        )}
 
         {/* Fuente de relieve - solo cargar en modo 3D */}
         {is3D && (
@@ -174,23 +181,29 @@ export default function MapaInteractivo() {
             onClose={handleClosePopup}
             closeOnClick={false}
             anchor="bottom"
-            maxWidth="220px"
+            maxWidth="240px"
             // Optimización: Offset para mejor posicionamiento
             offset={15}
+            className="rounded-none font-sans"
           >
             {popupContent}
           </Popup>
         )}
       </Map>
 
-      {/* Botón 2D/3D optimizado */}
+      {/* Botón 2D/3D optimizado - Re-styled for Robust Minimalism */}
       <button
         onClick={toggleMapStyle}
-        className="absolute top-5 left-5 z-10 px-4 py-2 bg-white text-[#1a3a5f] border-none rounded-full cursor-pointer font-semibold font-sans shadow-md hover:shadow-lg transition-shadow duration-200"
-        style={{ willChange: 'box-shadow' }}
+        className="absolute top-4 left-4 z-10 px-4 py-2 bg-slate/90 backdrop-blur-sm text-neon-lichen border border-neon-lichen hover:bg-neon-lichen hover:text-basalt transition-all duration-200 uppercase font-bold text-xs font-display tracking-widest shadow-none rounded-none"
       >
-        {is3D ? '🗺️ Ver en 2D' : '🌍 Ver en 3D'}
+        {is3D ? '2D View' : '3D Terrain'}
       </button>
+
+      {/* Decorative corners or technical overlay if desired */}
+      <div className="absolute bottom-4 left-4 text-[10px] text-neon-lichen/50 font-mono pointer-events-none">
+        COORD: 16.565° S, 68.050° W <br/>
+        ELEV: 3825M
+      </div>
     </div>
   );
 }

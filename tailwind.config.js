@@ -6,22 +6,26 @@ export default {
   ],
   theme: {
     extend: {
-      // Tus fuentes personalizadas (NO LAS BORRÉ)
-      fontFamily: {
-        'limelight': ['Limelight', 'cursive'],
-        'new-rocker': ['"New Rocker"', 'cursive'],
-        'instrument': ['"Instrument Serif"', 'serif'],
-        // Agregué esta para asegurar el look "máquina de escribir" del Chatbot
-        'mono': ['"Courier New"', 'Courier', 'monospace'], 
+      colors: {
+        basalt: '#0F0F11',
+        slate: '#1A1A1C',
+        'neon-lichen': '#CCFF00',
+        clay: '#FF5E3A',
+        glacier: '#F2F2F2',
+        granite: '#A0A0A0',
       },
-      // 👇 AGREGAR ESTO: Definición de las animaciones del Chatbot y Loading
+      fontFamily: {
+        'display': ['"Bricolage Grotesque"', 'sans-serif'],
+        'body': ['"Space Grotesk"', 'sans-serif'],
+        'sans': ['"Inter"', 'sans-serif'],
+        // Mantener mono para el chatbot si es necesario, o cambiarla
+        'mono': ['"Space Grotesk"', 'monospace'],
+      },
       keyframes: {
-        // Animación para las líneas de escaneo (bajan infinitamente)
         scan: {
           '0%': { backgroundPosition: '0% 0%' },
           '100%': { backgroundPosition: '0% 100%' },
         },
-        // Animación para el parpadeo de monitor viejo (CRT)
         flicker: {
           '0%': { opacity: '0.97' },
           '5%': { opacity: '0.9' },
@@ -29,16 +33,14 @@ export default {
           '15%': { opacity: '0.95' },
           '100%': { opacity: '0.97' },
         },
-        // Animación para el brillo lento (usado en loading)
         'pulse-slow': {
           '0%, 100%': { opacity: '0.4' },
           '50%': { opacity: '0.7' },
         }
       },
-      // 👇 AGREGAR ESTO: Nombres de clases para usar en el HTML
       animation: {
-        scan: 'scan 8s linear infinite',      // class="animate-scan"
-        flicker: 'flicker 2s infinite',       // class="animate-flicker"
+        scan: 'scan 8s linear infinite',
+        flicker: 'flicker 2s infinite',
         'pulse-slow': 'pulse-slow 4s ease-in-out infinite',
       }
     },
