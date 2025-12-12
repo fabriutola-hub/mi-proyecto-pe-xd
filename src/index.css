@@ -114,3 +114,51 @@ img[loading="lazy"] {
     scroll-behavior: auto;
   }
 }
+
+/* ====================================
+   OPTIMIZACIONES MÓVILES
+   ==================================== */
+@media (max-width: 768px) {
+
+  /* Reducir complejidad de animaciones */
+  * {
+    animation-duration: 0.2s !important;
+    transition-duration: 0.2s !important;
+  }
+
+  /* Optimizar scroll en móvil */
+  html,
+  body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* Mejorar touch targets */
+  button,
+  a,
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Desactivar efectos pesados */
+  .animate-scan,
+  .animate-flicker,
+  .animate-pulse {
+    animation: none !important;
+  }
+
+  /* Reducir box-shadows */
+  .shadow-2xl {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1) !important;
+  }
+
+  /* Optimizar backdrop-blur (pesado en móvil) */
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl {
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+  }
+}

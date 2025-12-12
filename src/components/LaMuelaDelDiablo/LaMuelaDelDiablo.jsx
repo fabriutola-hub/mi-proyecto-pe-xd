@@ -27,8 +27,8 @@ export default function LaMuelaDelDiablo() {
   const refs = useSectionRefs();
 
   useEffect(() => {
-    // Reducido a 500ms para mejor LCP/CLS
-    const timer = setTimeout(() => setIsLoaded(true), 500);
+    // Tiempo de loading: 1 segundo
+    const timer = setTimeout(() => setIsLoaded(true), 1000);
     return () => clearTimeout(timer);
   }, []);
 

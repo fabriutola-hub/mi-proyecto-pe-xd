@@ -1,9 +1,9 @@
 import { useState, useEffect, useMemo, memo } from 'react';
 import { motion, AnimatePresence, useSpring, useTransform, animate } from 'framer-motion';
 
-// Constantes - ajustadas para loading de 500ms
-const ANIMATION_DURATION = 0.4;
-const PHASE_INTERVAL = 150;
+// Constantes - ajustadas para loading de 1000ms
+const ANIMATION_DURATION = 0.8;
+const PHASE_INTERVAL = 250;
 const DATA_STREAM_INTERVAL = 100;
 
 const PHASES = [
@@ -38,6 +38,12 @@ export default function LoadingScreen() {
 
   const phases = useMemo(() => PHASES, []);
 
+  // Detectar móvil
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
   useEffect(() => {
     const controls = animate(count, 100, { duration: ANIMATION_DURATION, ease: 'easeInOut' });
     const phaseInterval = setInterval(() => {
@@ -54,57 +60,59 @@ export default function LoadingScreen() {
     <motion.div
       key="loading-screen"
       className="fixed inset-0 z-[999] bg-[#050505] flex flex-col items-center justify-center overflow-hidden cursor-wait"
-      exit={{ opacity: 0, transition: { duration: 0.8, ease: 'easeInOut' } }}
+      exit={{ opacity: 0, transition: { duration: 0.3, ease: 'easeOut' } }}
     >
-      {/* Fondo con grid en perspectiva */}
-      <div className="absolute inset-0 perspective-1000 pointer-events-none opacity-20">
-        <motion.div
-          animate={{ backgroundPosition: ['0px 0px', '0px 100px'] }}
-          transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '40px 40px',
-            transform: 'rotateX(60deg) scale(2)',
-            maskImage: 'linear-gradient(to bottom, transparent, black 40%, black 80%, transparent)'
-          }}
-        />
-      </div>
+      {/* Fondo con grid - solo en desktop */}
+      {!isMobile && (
+        <div className="absolute inset-0 perspective-1000 pointer-events-none opacity-20">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `
+                linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: '40px 40px',
+              transform: 'rotateX(60deg) scale(2)',
+              maskImage: 'linear-gradient(to bottom, transparent, black 40%, black 80%, transparent)'
+            }}
+          />
+        </div>
+      )}
 
-      {/* HUD Corners */}
-      <div className="absolute inset-8 md:inset-12 pointer-events-none border border-white/5 rounded-3xl z-10 flex flex-col justify-between">
-        {/* Top Left */}
-        <div className="p-6 flex flex-col border-l border-t border-white/20 rounded-tl-3xl w-48">
-          <span className="text-xs font-bold text-white tracking-widest mb-1">SYSTEM_BOOT</span>
-          <div className="flex gap-2 items-center">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            <span className="text-[10px] text-gray-400 uppercase">Online</span>
+      {/* HUD Corners - solo en desktop */}
+      {!isMobile && (
+        <div className="absolute inset-8 md:inset-12 pointer-events-none border border-white/5 rounded-3xl z-10 flex flex-col justify-between">
+          {/* Top Left */}
+          <div className="p-6 flex flex-col border-l border-t border-white/20 rounded-tl-3xl w-48">
+            <span className="text-xs font-bold text-white tracking-widest mb-1">SYSTEM_BOOT</span>
+            <div className="flex gap-2 items-center">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              <span className="text-[10px] text-gray-400 uppercase">Online</span>
+            </div>
+          </div>
+
+          {/* Top Right */}
+          <div className="p-6 flex flex-col items-end border-r border-t border-white/20 rounded-tr-3xl absolute top-0 right-0 w-48">
+            <DataStream />
+            <DataStream />
+            <DataStream />
+          </div>
+
+          {/* Bottom Left */}
+          <div className="p-6 border-l border-b border-white/20 rounded-bl-3xl absolute bottom-0 left-0 w-48">
+            <span className="text-[10px] text-gray-500 uppercase">Memory usage:</span>
+            <div className="w-full h-1 bg-gray-800 mt-1 rounded-full overflow-hidden">
+              <motion.div className="h-full bg-orange-500" style={{ width: memoryProgress }} />
+            </div>
+          </div>
+
+          {/* Bottom Right */}
+          <div className="p-6 flex items-end justify-end border-r border-b border-white/20 rounded-br-3xl absolute bottom-0 right-0 w-48">
+            <span className="font-limelight text-2xl text-white/20">M.D.D.</span>
           </div>
         </div>
-
-        {/* Top Right */}
-        <div className="p-6 flex flex-col items-end border-r border-t border-white/20 rounded-tr-3xl absolute top-0 right-0 w-48">
-          <DataStream />
-          <DataStream />
-          <DataStream />
-        </div>
-
-        {/* Bottom Left */}
-        <div className="p-6 border-l border-b border-white/20 rounded-bl-3xl absolute bottom-0 left-0 w-48">
-          <span className="text-[10px] text-gray-500 uppercase">Memory usage:</span>
-          <div className="w-full h-1 bg-gray-800 mt-1 rounded-full overflow-hidden">
-            <motion.div className="h-full bg-orange-500" style={{ width: memoryProgress }} />
-          </div>
-        </div>
-
-        {/* Bottom Right */}
-        <div className="p-6 flex items-end justify-end border-r border-b border-white/20 rounded-br-3xl absolute bottom-0 right-0 w-48">
-          <span className="font-limelight text-2xl text-white/20">M.D.D.</span>
-        </div>
-      </div>
+      )}
 
       {/* Centro: Radar/Escáner */}
       <div className="relative z-20 flex flex-col items-center">

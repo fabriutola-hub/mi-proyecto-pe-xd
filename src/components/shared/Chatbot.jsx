@@ -20,18 +20,30 @@ const QUICK_SUGGESTIONS = [
   'VECTOR DE APROXIMACIÓN 🚗'
 ];
 
-// Componentes decorativos memoizados
-const Scanlines = memo(() => (
-  <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden rounded-3xl opacity-20">
-    <div className="w-full h-full bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.5)_50%)] bg-[length:100%_4px]" />
-    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-orange-500/5 to-transparent animate-scan" />
-  </div>
-));
+// Detectar móvil
+const isMobileDevice = () => {
+  if (typeof window === 'undefined') return false;
+  return window.innerWidth < 768 || 'ontouchstart' in window;
+};
+
+// Componentes decorativos - solo se muestran en desktop
+const Scanlines = memo(({ show }) => {
+  if (!show) return null;
+  return (
+    <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden rounded-3xl opacity-20">
+      <div className="w-full h-full bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.5)_50%)] bg-[length:100%_4px]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-orange-500/5 to-transparent animate-scan" />
+    </div>
+  );
+});
 Scanlines.displayName = 'Scanlines';
 
-const CRTFlicker = memo(() => (
-  <div className="absolute inset-0 pointer-events-none z-30 bg-orange-500/5 mix-blend-overlay animate-flicker rounded-3xl" />
-));
+const CRTFlicker = memo(({ show }) => {
+  if (!show) return null;
+  return (
+    <div className="absolute inset-0 pointer-events-none z-30 bg-orange-500/5 mix-blend-overlay animate-flicker rounded-3xl" />
+  );
+});
 CRTFlicker.displayName = 'CRTFlicker';
 
 // Componente de mensaje
@@ -44,8 +56,8 @@ const ChatMessage = memo(({ msg, idx }) => (
   >
     <div
       className={`max-w-[85%] p-4 relative group ${msg.type === 'user'
-          ? 'bg-[#ea580c]/10 border border-[#ea580c]/50 text-[#ea580c]'
-          : 'bg-[#2c1a0f] border border-[#5c2e08] text-[#fdba74]'
+        ? 'bg-[#ea580c]/10 border border-[#ea580c]/50 text-[#ea580c]'
+        : 'bg-[#2c1a0f] border border-[#5c2e08] text-[#fdba74]'
         }`}
       style={{
         clipPath: msg.type === 'user'
@@ -89,9 +101,15 @@ export default function Chatbot() {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [sessionId] = useState(() => Math.random().toString(36).substr(2, 9));
+  const [isMobile, setIsMobile] = useState(false);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+
+  // Detectar móvil al montar
+  useEffect(() => {
+    setIsMobile(isMobileDevice());
+  }, []);
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -205,8 +223,8 @@ export default function Chatbot() {
             className="fixed inset-x-0 bottom-0 md:inset-x-auto md:right-8 md:bottom-28 z-[100] w-full md:w-[450px] h-[85vh] md:h-[calc(100vh-150px)] md:max-h-[700px] flex flex-col"
           >
             <div className="relative w-full h-full bg-[#1a1510] border-2 border-[#ea580c] rounded-t-3xl md:rounded-3xl shadow-2xl overflow-hidden flex flex-col font-mono">
-              <Scanlines />
-              <CRTFlicker />
+              <Scanlines show={!isMobile} />
+              <CRTFlicker show={!isMobile} />
 
               {/* Header */}
               <div className="relative z-40 bg-[#2c1a0f] border-b-2 border-[#ea580c] p-4 flex items-center justify-between shrink-0">
