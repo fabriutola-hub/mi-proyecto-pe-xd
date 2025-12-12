@@ -1,7 +1,6 @@
 import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
 import { AnimatePresence, useReducedMotion } from 'framer-motion';
 import LoadingScreen from '@/components/shared/LoadingScreen';
-import Chatbot from '@/components/shared/Chatbot';
 import { useSectionRefs } from './Hooks/useSectionRefs';
 
 // Lazy load de secciones
@@ -97,7 +96,6 @@ export default function LaMuelaDelDiablo() {
             <FooterSection ref={refs.contactRef} />
           </Suspense>
 
-          <Chatbot />
         </div>
       </div>
     </>
