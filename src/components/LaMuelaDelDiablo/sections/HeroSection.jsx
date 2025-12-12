@@ -116,8 +116,8 @@ const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs })
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out border-b ${isScrolled || menuOpen
-            ? 'bg-black/90 backdrop-blur-xl border-white/10 shadow-lg'
-            : 'bg-transparent border-transparent'
+          ? 'bg-black/90 backdrop-blur-xl border-white/10 shadow-lg'
+          : 'bg-transparent border-transparent'
           }`}
         style={{ paddingBlock: isScrolled ? '1rem' : '1.5rem' }}
       >
@@ -221,67 +221,49 @@ const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs })
 
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <motion.div style={{ opacity: heroOpacity, y: heroY }} className="absolute inset-0">
+        {/* Imagen Hero - sin animaciones para mejor LCP */}
+        <div className="absolute inset-0">
           <img
             src={HERO_IMAGE}
-            alt="La Muela del Diablo"
+            alt="La Muela del Diablo - Formación rocosa en La Paz, Bolivia"
             className="w-full h-full object-cover"
             loading="eager"
             fetchpriority="high"
-            decoding="async"
+            decoding="sync"
             width="1920"
             height="1080"
+            style={{ contentVisibility: 'auto' }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/90" />
-        </motion.div>
+        </div>
 
         <div className="relative z-10 max-w-[1400px] mx-auto px-8 md:px-16 text-center pt-24 md:pt-1">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.5, duration: 0.8 }}
+            initial={{ opacity: 0 }}
+            animate={isLoaded ? { opacity: 1 } : {}}
+            transition={{ delay: 0.3, duration: 0.5 }}
             className="space-y-8"
           >
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.4 }}
-              className="text-xl md:text-2xl text-white/80 font-montserrat font-medium uppercase tracking-[0.3em]"
-            >
+            <p className="text-xl md:text-2xl text-white/80 font-montserrat font-medium uppercase tracking-[0.3em]">
               La Paz, Bolivia
-            </motion.p>
+            </p>
 
             <div className="overflow-visible">
-              <motion.h1
-                initial={{ y: '100%' }}
-                animate={isLoaded ? { y: 0 } : { y: '100%' }}
-                transition={{ delay: 0.7, duration: 0.7, ease: [0.33, 1, 0.68, 1] }}
-                className="text-[clamp(3rem,10vw,10rem)] font-poppins font-black leading-[0.85] tracking-tighter"
-              >
+              <h1 className="text-[clamp(3rem,10vw,10rem)] font-poppins font-black leading-[0.85] tracking-tighter">
                 <span className="block drop-shadow-2xl">LA MUELA</span>
                 <span className="block bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent">
                   DEL DIABLO
                 </span>
-              </motion.h1>
+              </h1>
             </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.9, duration: 0.4 }}
-              className="text-xl md:text-3xl max-w-4xl mx-auto font-inter font-light leading-relaxed text-white/90"
-            >
+            <p className="text-xl md:text-3xl max-w-4xl mx-auto font-inter font-light leading-relaxed text-white/90">
               Con 3650 metros de altura.<br />Una formación rocosa increíble.
-            </motion.p>
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 1.1, duration: 0.4 }}
-              className="flex flex-wrap justify-center gap-6 pt-8"
-            >
+            <div className="flex flex-wrap justify-center gap-6 pt-8">
               <motion.button
-                whileHover={{ scale: 1.03, y: -2 }}
+                whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleExploreClick}
                 className="px-12 py-5 bg-white text-black rounded-full text-lg font-montserrat font-semibold hover:bg-white/90 transition-all"
@@ -289,14 +271,14 @@ const HeroSection = ({ isLoaded, menuOpen, setMenuOpen, scrollToSection, refs })
                 Explorar Ahora
               </motion.button>
               <motion.button
-                whileHover={{ scale: 1.03, y: -2 }}
+                whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleVideoClick}
                 className="px-12 py-5 border-2 border-white/30 backdrop-blur-sm rounded-full text-lg font-montserrat font-semibold hover:bg-white/10 transition-all"
               >
                 Ver Video
               </motion.button>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </section>

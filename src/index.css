@@ -73,11 +73,12 @@ iframe {
   backface-visibility: hidden;
 }
 
-/* Content visibility para lazy rendering de secciones */
+/* Content visibility - deshabilitado temporalmente por causar CLS
 section {
   content-visibility: auto;
   contain-intrinsic-size: auto 800px;
 }
+*/
 
 /* GPU acceleration clase utilitaria */
 .gpu-accelerated {

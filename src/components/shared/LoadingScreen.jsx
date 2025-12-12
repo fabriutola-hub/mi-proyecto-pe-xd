@@ -1,10 +1,10 @@
 import { useState, useEffect, useMemo, memo } from 'react';
 import { motion, AnimatePresence, useSpring, useTransform, animate } from 'framer-motion';
 
-// Constantes
-const ANIMATION_DURATION = 2.8;
-const PHASE_INTERVAL = 700;
-const DATA_STREAM_INTERVAL = 200;
+// Constantes - ajustadas para loading de 500ms
+const ANIMATION_DURATION = 0.4;
+const PHASE_INTERVAL = 150;
+const DATA_STREAM_INTERVAL = 100;
 
 const PHASES = [
   { title: 'Calibrando Sensores', sub: 'Iniciando módulos geológicos...' },
