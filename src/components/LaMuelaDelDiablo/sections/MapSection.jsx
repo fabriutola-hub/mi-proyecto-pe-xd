@@ -94,7 +94,8 @@ const MapSection = forwardRef((props, ref) => {
               Coordenadas & Acceso
             </span>
             
-            <h2 className="text-[clamp(3rem,6vw,5rem)] leading-[0.9] tracking-tighter mb-6">
+            {/* CORREGIDO: Se eliminó el <h2> exterior y se cambió por un div con margen */}
+            <div className="mb-6">
               <PaintText 
                 text="Ruta de Exploración"
                 className="text-[clamp(3rem,6vw,5rem)] font-new-rocker text-white leading-[0.9]"
@@ -105,7 +106,7 @@ const MapSection = forwardRef((props, ref) => {
                 secondaryStartWord="Exploración"
                 animationDuration={0.6}
               />
-            </h2>
+            </div>
             
             <p className="text-xl font-instrument text-gray-400 max-w-3xl mx-auto leading-relaxed">
               Ubicada en Mallasa a <span className="text-white font-bold">3,825 m.s.n.m.</span> El ascenso comienza donde termina el asfalto.

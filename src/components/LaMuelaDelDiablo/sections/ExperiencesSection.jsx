@@ -102,7 +102,8 @@ const ExperiencesSection = forwardRef((props, ref) => {
             Nuestras Actividades
           </span>
           
-          <h2 className="text-[clamp(3rem,7vw,6rem)] leading-[0.9]">
+          {/* CORREGIDO: Se eliminó el <h2> que envolvía a PaintText */}
+          <div className="mb-4">
             <PaintText
               text="Vive la Aventura"
               className="text-[clamp(3rem,7vw,6rem)] font-new-rocker text-white leading-[0.9]"
@@ -113,7 +114,7 @@ const ExperiencesSection = forwardRef((props, ref) => {
               secondaryStartWord="Aventura"
               animationDuration={0.6}
             />
-          </h2>
+          </div>
           
           <motion.p 
             initial={{ opacity: 0 }}

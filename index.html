@@ -3,12 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    
+    <!-- ⚡ PERFORMANCE: DNS Prefetch & Preconnect -->
+    <link rel="dns-prefetch" href="https://miss-minutes-backend.onrender.com">
+    <link rel="dns-prefetch" href="https://api.mapbox.com">
+    <link rel="preconnect" href="https://api.mapbox.com" crossorigin>
+    
+    <!-- ⚡ PERFORMANCE: Preload imagen Hero crítica -->
+    <link rel="preload" href="/imagenes/fondo-muela (1).avif" as="image" type="image/avif" fetchpriority="high">
     
     <!-- Google Fonts - Método oficial -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Limelight&family=New+Rocker&display=swap" rel="stylesheet">
+    
+    <!-- ⚡ META TAGS DE PERFORMANCE -->
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="La Muela del Diablo - Experiencia inmersiva 360° del sitio arqueológico en La Paz, Bolivia">
+    
     <title>La Muela del Diablo</title>
   </head>
   <body>

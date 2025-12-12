@@ -86,18 +86,17 @@ const Visor360Section = forwardRef(({ selectedVisor, handleOpenVisor, handleClos
               🌐 Inmersión 360°
             </motion.span>
             
-            <h2 className="text-[clamp(3rem,8vw,6rem)] font-black leading-tight tracking-tight">
-              <PaintText
-                text="Explora como si estuvieras ahí"
-                className="text-[clamp(3rem,8vw,6rem)] font-black leading-tight tracking-tight"
-                paintedColor="#ffffff"
-                unpaintedColor="rgba(255, 255, 255, 0.15)"
-                bicolor={true}
-                secondaryColor="#06b6d4"
-                secondaryStartWord="estuvieras"
-                animationDuration={0.4}
-              />
-            </h2>
+            {/* CORREGIDO: Se eliminó el <h2> exterior que envolvía a PaintText */}
+            <PaintText
+              text="Explora como si estuvieras ahí"
+              className="text-[clamp(3rem,8vw,6rem)] font-black leading-tight tracking-tight"
+              paintedColor="#ffffff"
+              unpaintedColor="rgba(255, 255, 255, 0.15)"
+              bicolor={true}
+              secondaryColor="#06b6d4"
+              secondaryStartWord="estuvieras"
+              animationDuration={0.4}
+            />
             
             <motion.p
               initial={{ opacity: 0, y: 15 }}

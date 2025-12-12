@@ -41,18 +41,17 @@ const TestimonialsCarousel = forwardRef(({ shouldReduceMotion }, ref) => {
             Testimonios Reales • TripAdvisor
           </motion.span>
           
-          <h2 className="text-[clamp(3rem,8vw,6rem)] font-black leading-tight tracking-tight">
-            <PaintText
-              text="Historias Auténticas"
-              className="text-[clamp(3rem,8vw,6rem)] font-black leading-tight tracking-tight"
-              paintedColor="#ffffff"
-              unpaintedColor="rgba(255, 255, 255, 0.15)"
-              bicolor={true}
-              secondaryColor="#10b981"
-              secondaryStartWord="Auténticas"
-              animationDuration={0.4}
-            />
-          </h2>
+          {/* CORREGIDO: Se eliminó el <h2> que envolvía a PaintText para evitar anidación inválida */}
+          <PaintText
+            text="Historias Auténticas"
+            className="text-[clamp(3rem,8vw,6rem)] font-black leading-tight tracking-tight"
+            paintedColor="#ffffff"
+            unpaintedColor="rgba(255, 255, 255, 0.15)"
+            bicolor={true}
+            secondaryColor="#10b981"
+            secondaryStartWord="Auténticas"
+            animationDuration={0.4}
+          />
           
           <motion.p
             initial={{ opacity: 0, y: 15 }}

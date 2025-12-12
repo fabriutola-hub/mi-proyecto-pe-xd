@@ -49,7 +49,7 @@ const GalleryCard = ({ item, index }) => {
       // AQUI SE APLICAN TUS CLASES (item.col, item.row)
       className={`${item.col} ${item.row} relative rounded-xl perspective-1000 cursor-none group z-0 hover:z-20`}
     >
-      <div 
+      <div
         className="relative w-full h-full rounded-xl overflow-hidden shadow-2xl border border-white/10 bg-gray-900"
         style={{ transform: "translateZ(0)" }}
       >
@@ -60,13 +60,15 @@ const GalleryCard = ({ item, index }) => {
           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
           loading="lazy"
           decoding="async"
+          width="600"
+          height="400"
         />
 
         {/* Overlay Gradiente */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        
+
         {/* Brillo Reactivo */}
-        <motion.div 
+        <motion.div
           style={{ opacity: shineOpacity }}
           className="absolute inset-0 bg-gradient-to-tr from-transparent via-white to-transparent pointer-events-none mix-blend-overlay"
         />
@@ -85,14 +87,14 @@ const GalleryCard = ({ item, index }) => {
         </motion.div>
 
         {/* Información de Texto Flotante */}
-        <div 
+        <div
           className="absolute bottom-0 left-0 w-full p-6 md:p-8 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-75"
           style={{ transform: "translateZ(20px)" }}
         >
           <span className="inline-block text-[10px] font-bold text-orange-400 uppercase tracking-[0.2em] mb-2">
             {item.caption}
           </span>
-          
+
           <p className="text-white/90 font-instrument text-lg md:text-xl leading-tight border-l-2 border-orange-500 pl-3">
             {item.description}
           </p>
@@ -109,13 +111,13 @@ const GallerySection = forwardRef((props, ref) => {
 
   return (
     <section ref={ref} className="py-32 md:py-40 bg-[#050505] relative overflow-hidden">
-      
+
       {/* Decoraciones de fondo */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
       <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-orange-500/5 blur-[120px] rounded-full pointer-events-none translate-x-1/2" />
 
       <div className="max-w-[1600px] mx-auto px-6 md:px-12 relative z-10">
-        
+
         {/* Header */}
         <div className="text-center mb-24 md:mb-32">
           <motion.div
@@ -126,20 +128,18 @@ const GallerySection = forwardRef((props, ref) => {
             <span className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-semibold uppercase tracking-wider mb-8">
               Galería
             </span>
-            
-            {/* 🔥 TÍTULO RESTAURADO: Font Black + Color Rosa (#ec4899) */}
-            <h2 className="text-[clamp(3rem,8vw,6rem)] font-black leading-tight tracking-tight">
-              <PaintText
-                text="Captura la Magia"
-                className="text-[clamp(3rem,8vw,6rem)] font-black leading-tight tracking-tight"
-                paintedColor="#ffffff"
-                unpaintedColor="rgba(255, 255, 255, 0.15)"
-                bicolor={true}
-                secondaryColor="#ec4899" 
-                secondaryStartWord="Magia"
-                animationDuration={0.4}
-              />
-            </h2>
+
+            {/* CORREGIDO: Se eliminó el <h2> que envolvía a PaintText */}
+            <PaintText
+              text="Captura la Magia"
+              className="text-[clamp(3rem,8vw,6rem)] font-black leading-tight tracking-tight"
+              paintedColor="#ffffff"
+              unpaintedColor="rgba(255, 255, 255, 0.15)"
+              bicolor={true}
+              secondaryColor="#ec4899"
+              secondaryStartWord="Magia"
+              animationDuration={0.4}
+            />
 
             <p className="mt-6 text-xl font-instrument text-gray-500 italic max-w-xl mx-auto">
               Fragmentos congelados en el tiempo del Auki Kollo.

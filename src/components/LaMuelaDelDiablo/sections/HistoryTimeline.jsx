@@ -75,7 +75,6 @@ const TimelineItem = ({ item, index }) => {
   );
 };
 
-// --- AQUÍ ESTABA EL PROBLEMA: FALTABA EL forwardRef ---
 const HistoryTimeline = forwardRef((props, ref) => {
   
   // Hook para detectar el scroll dentro de esta sección usando la ref que viene del padre
@@ -110,7 +109,8 @@ const HistoryTimeline = forwardRef((props, ref) => {
               Cronología Histórica
             </span>
             
-            <h2 className="text-[clamp(2.5rem,6vw,5rem)] leading-[0.9] tracking-tighter mb-8">
+            {/* CORREGIDO: Cambiado h2 por div para evitar anidación inválida de encabezados */}
+            <div className="mb-8">
               <PaintText
                 text="Milenios de Historia Viva"
                 className="text-[clamp(2.5rem,6vw,5rem)] leading-[0.9] tracking-tighter font-new-rocker"
@@ -122,7 +122,7 @@ const HistoryTimeline = forwardRef((props, ref) => {
                 animationDuration={0.6}
                 staggerDelay={0.012}
               />
-            </h2>
+            </div>
 
             <p className="max-w-2xl mx-auto text-xl font-instrument text-gray-500 leading-relaxed">
               Un viaje a través del tiempo en Auki Kollo, donde cada estrato geológico
